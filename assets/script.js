@@ -16,7 +16,7 @@ const getDataApi = (url) => {
 
 const readUsers = async () => {
     try {
-        let { time = 0, data = [] } = readLocalStorage("users");
+        let { time = 0, data = [] } = readLocalStorage("users") || {};
         if (time > Date.now()) return showData(data);
 
         showSpinner()
