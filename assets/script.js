@@ -1,6 +1,7 @@
 let btnShowUsers = document.getElementById('btnShowUsers')
 let usersInfo = document.getElementById('usersInfo')
 const URL = "https://reqres.in/api/users?delay=3"
+let timeLife = 60000
 
 const useLocalStorage = (key, value) => localStorage.setItem(key, JSON.stringify(value));
 const readLocalStorage = (key) => JSON.parse(localStorage.getItem(key));
@@ -23,7 +24,7 @@ const readUsers = async () => {
         const users = await getDataApi(URL);
         useLocalStorage("users", {
             data: users,
-            time: Date.now() + 60000,
+            time: Date.now() + timeLife,
         });
         showData(users);
     } catch (error) {
