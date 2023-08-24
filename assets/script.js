@@ -1,7 +1,7 @@
 let btnShowUsers = document.getElementById('btnShowUsers')
 let usersInfo = document.getElementById('usersInfo')
 const URL = "https://reqres.in/api/users?delay=3"
-let timeLife = 60000
+let timeLife = 60000                                                    // el tiempo de vida lo guardamos en una variable para poder hacer cambios rapidos
 
 const useLocalStorage = (key, value) => localStorage.setItem(key, JSON.stringify(value));
 const readLocalStorage = (key) => JSON.parse(localStorage.getItem(key));
@@ -17,14 +17,14 @@ const getDataApi = (url) => {
 
 const readUsers = async () => {
     try {
-        let { time = 0, data = [] } = readLocalStorage("users") || {};
-        if (time > Date.now()) return showData(data);
+        let { time = 0, data = [] } = readLocalStorage("users") || {}; //  desestructurar datos del local y en caso de no tener, tomarlos de un objeto vacio o caso contrario nos daria error
+        if (time > Date.now()) return showData(data);                  //  comparamos el tiempo limite de vida con el actual, si todavia no se supera, seguimos mostrando datos sin hacer peticion
 
         showSpinner()
         const users = await getDataApi(URL);
         useLocalStorage("users", {
             data: users,
-            time: Date.now() + timeLife,
+            time: Date.now() + timeLife,                               //  este time sera el tiempo limite para mostrar los datos sin hacer peticion
         });
         showData(users);
     } catch (error) {
